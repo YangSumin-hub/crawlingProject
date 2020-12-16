@@ -18,7 +18,7 @@ html = requests.get(url)
 soup = BeautifulSoup(html.text, 'lxml')
 cnt = len(soup.findAll('div',class_='basicList_title__3P9Q7'))
 
-
+''' dd '''
 for i in range(cnt):
     naver = {}
     metadata = soup.find_all('div', class_='basicList_title__3P9Q7')[i]
