@@ -9,7 +9,7 @@ excel_sheet = excel_file.active
 excel_sheet.column_dimensions['B'].width = 100
 
 num = 0
-excel_sheet.append(['제품명', '가격','inf','url'])
+excel_sheet.append(['제품명', '가격','inf','찜수','url'])
 
 file = open("./naver.json", "w")
 keyword = '측정기'
@@ -30,14 +30,17 @@ for i in range(cnt):
     
     inf = soup.find_all('div', class_='basicList_etc_box__1Jzg6')[i].text
     print('<', inf,'>')
+    
+    zzim = soup.find_all('em', class_='basicList_num__1yXM9')[i].text
+    print("찜수:"+zzim)
 
     url = metadata.a.get('href')
     print("<url> : ", url)                  # url
          
     print("===================================================")
     
-    naver = {'제품명' : title , '가격' : price, 'url' : url,'inf':inf }
-    excel_sheet.append([title, price,inf,url])
+    naver = {'제품명' : title , '가격' : price, 'url' : url,'inf':inf ,'zzim':zzim}
+    excel_sheet.append([title, price,inf,zzim,url])
     file.write(json.dumps(naver))
 file.close() 
 
@@ -47,5 +50,5 @@ cell_A1.alignment = openpyxl.styles.Alignment(horizontal="center")
 cell_B1 = excel_sheet['B1']
 cell_B1.alignment = openpyxl.styles.Alignment(horizontal="center")
 
-excel_file.save('01.xlsx')
+excel_file.save('02.xlsx')
 excel_file.close()
